@@ -1,20 +1,18 @@
 const express = require('express');
-
+const bodyParser = require('body-parser')
 const app = express();
+const path = require('path')
 
-app.use('/', (req, res, next) => {
-    console.log('This always run')
-    next();
-})
+const adminRoutes = require('./routes/admin.js')
+const shopRoutes = require('./routes/shop.js')
 
-app.use('/add-product', (req, res, next) => {
-    console.log('In another middleware!')
-    res.send('<h1>The add product page</h1>')
-})
+app.use(bodyParser.urlencoded({extended: false}))
 
-app.use('/', (req, res, next) => {
-    console.log('In another middleware!')
-    res.send('<h1>Hello from Express</h1>')
+app.use('/admin', adminRoutes);
+app.use(shopRoutes)
+
+app.use((req, res, next) => {
+    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'))
 })
 
 app.listen(3000);
