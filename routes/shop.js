@@ -4,7 +4,8 @@ const routeDir = require('../util/path')
 const router = express.Router();
 const adminData = require('./admin')
 router.get('/', (req, res, next) => {
-    res.render('shop')
+    const products = adminData.products;
+    res.render('shop', {prods: products, pageTitle: 'Shop', path: '/'})
 });
 
 
