@@ -12,10 +12,12 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
     const prodID = req.params.productID;
-    console.log(Product.findById(prodID, product => {
-        console.log(product);
-    }));
-    res.redirect('/');
+    Product.findById(prodID, product => {
+        res.render('shop/product-detail', {
+            product: product,
+            pageTitle: product.title,
+            path: '/products'});
+    });
 };
 
 exports.getIndex = (req, res, next) => {
@@ -34,6 +36,12 @@ exports.getCart = (req, res, next) => {
         pageTitle: 'Your Cart',
 
     })
+}
+
+exports.postCart =  (req, res, next) => {
+    const prodID = req.body.productID;
+    console.log(prodID);
+    res.redirect('/cart');
 }
 
 exports.getOrders = (req, res, next) => {
